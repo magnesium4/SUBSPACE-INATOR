@@ -1,6 +1,5 @@
 from typing import List
 import numpy as np
-import numpy.typing as npt
 from numpy import linalg as LA
 from scipy.linalg import null_space
 from copy import deepcopy
@@ -50,7 +49,7 @@ def find_generalized_eigen_basis(A: List[List[float]], x: float) -> List[float]:
     B = deepcopy(A)
     generalized_eigens = []
     while not is_zero(B):
-        generalized_eigens.extend(find_eigen_basis(B))
+        generalized_eigens.extend(find_eigen_basis(B, x))
         B = np.matmul(np.array(B), np.array(A)).tolist()
 
 
