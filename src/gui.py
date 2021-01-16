@@ -1,3 +1,4 @@
+from functools import partial
 from tkinter import *
 from linalg import *
 
@@ -7,12 +8,12 @@ from PIL import Image, ImageTk
 def click():
     root.destroy()
 
-
 # This method generates the matrix for the user to input to find the subspaces
 def generate():
 
     # user input try except statement (can only enter integer value between 1 and 20)
     user_var = False
+    user_in = ''
     try:
         user_in = int(entry.get())
         if not (1 <= user_in <= 20):
@@ -23,7 +24,6 @@ def generate():
         user_var = False
 
     if user_var:
-
         # making a window to display the matrix
         array_window = Tk()
 
@@ -31,21 +31,38 @@ def generate():
         txtboxes = [[0 for x in range(user_in)] for x in range(user_in)]
         for y in range(user_in):
             for x in range(user_in):
-                txtboxes[x][y] = Entry(array_window, width=10, font="Times 15 bold", justify='center')
+                txt_ent = Entry(array_window, width=10, font="Times 15 bold", justify='center')
+                txtboxes[x][y] = txt_ent
+                print(type(txtboxes[x][y]))
                 txtboxes[x][y].grid(column=x, row=y)
 
         compute_btn = Button(array_window, text="Compute", font="Times 15 bold", fg="white", bg="black", width=8,
                              command=lambda: compute(txtboxes, array_window))
-        compute_btn.grid(column=y//2, row=x + 1)
-
+        leng = user_in + 1
+        wid = (user_in + 1)//2
+        compute_btn.grid(column=wid, row=leng)
 
 # This method will compute the subspaces and show the jordan
 def compute(txtboxes, array_window):
-    array_window.destroy()
+    allowed = True
     matrix = [[0 for x in range(len(txtboxes))] for x in range(len(txtboxes))]
     for y in range(len(txtboxes)):
         for x in range(len(txtboxes)):
             matrix[x][y] = int(txtboxes[x][y].get())
+
+    if allowed:
+        answer = 'The number of invariant subspaces is: ' + str(count_inv_subspace(matrix))
+        jordan_form = find_jordan_form(matrix)
+        answer_window = Tk()
+        answer_label = Label(answer_window, text=answer)
+        answer_label.grid(column=0, row=0)
+        jordan_label = Label(answer_window, text='Here is the jordan form:')
+        jordan_label.grid(column=0, row=1)
+        for x in range(len(jordan_form)):
+            for y in range(len(jordan_form)):
+                matrix_label = Label(answer_window, text=jordan_form[y][x])
+                matrix_label.grid(column=y, row=x+2)
+
 
 if __name__ == "__main__":
 
