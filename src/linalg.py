@@ -57,18 +57,18 @@ def find_generalized_eigen_basis(A: List[List[float]], x: float) -> List[float]:
 
 
 # TODO: not sure if it works
-def find_jordan_basis(A: List[List[float]]) -> List[List[float]]:
-    """
-    Takes in a square matrix A and returns its jordan basis.
-    """
-    eigens = find_eigen_vals(A)
-    basis = []
-    for e in eigens:
-        B = deepcopy(A)
-        generalized_eigens = []
-        while not is_zero(B):
-            generalized_eigens.append(find_eigen_basis(B, x))
-            B = np.matmul(np.array(B), np.array(A)).tolist()
+# def find_jordan_basis(A: List[List[float]]) -> List[List[float]]:
+#     """
+#     Takes in a square matrix A and returns its jordan basis.
+#     """
+#     eigens = find_eigen_vals(A)
+#     basis = []
+#     for e in eigens:
+#         B = deepcopy(A)
+#         generalized_eigens = []
+#         while not is_zero(B):
+#             generalized_eigens.append(find_eigen_basis(B, x))
+#             B = np.matmul(np.array(B), np.array(A)).tolist()
     
 
 def find_jordan_form(A: List[List[float]]) -> List[List[float]]:
@@ -81,7 +81,7 @@ def find_jordan_form(A: List[List[float]]) -> List[List[float]]:
 
 def count_inv_subspace(A: List[List[float]]) -> int:
     """
-    Returns the number of invariant subspaces (jordan blocks) in A
+    Returns the number of invariant subspaces (Jordan blocks) in A
     """
     J = find_jordan_form(A)
     ans = 1
