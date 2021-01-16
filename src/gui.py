@@ -28,6 +28,7 @@ def generate():
     if user_var:
         # making a window to display the matrix
         array_window = Tk()
+        array_window.title("Computing Matrix")
 
         # making the textboxes for the matrix and displaying in the window
         txtboxes = [[0 for x in range(user_in)] for x in range(user_in)]
@@ -37,7 +38,7 @@ def generate():
                 txtboxes[x][y] = txt_ent
                 txtboxes[x][y].grid(column=x, row=y)
 
-        compute_btn = Button(array_window, text="Compute", font="Times 15 bold", fg="black", bg="white", width=8,
+        compute_btn = Button(array_window, text="Compute", font="Arial 15 bold", fg="black", bg="white", width=8,
                              command=lambda: compute(txtboxes))
         leng = user_in + 1
         compute_btn.grid(column=0, row=leng)
@@ -60,6 +61,7 @@ def compute(txtboxes):
         answer = 'The number of invariant subspaces is: ' + str(count_inv_subspace(matrix))
         jordan_form = find_jordan_form(matrix)
         answer_window = Tk()
+        answer_window.title("Output")
         answer_label = Label(answer_window, text=answer)
         answer_label.grid(column=0, row=0)
         jordan_label = Label(answer_window, text='Here is the jordan form:')
@@ -75,6 +77,7 @@ if __name__ == "__main__":
     # making the home screen window
     root = Tk()
     root.geometry("1000x600")
+    root.title("SUBSPACE-INATOR")
 
     # uploading the picture of space as the background
     bg = ImageTk.PhotoImage(file="space.png")
