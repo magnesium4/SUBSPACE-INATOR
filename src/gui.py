@@ -69,7 +69,7 @@ def compute(txtboxes):
         for x in range(len(jordan_form)):
             for y in range(len(jordan_form)):
                 matrix_label = Label(answer_window, text=jordan_form[y][x])
-                matrix_label.grid(column=y, row=x+2)
+                matrix_label.grid(column=y + 1, row=x+2)
 
 
 if __name__ == "__main__":
