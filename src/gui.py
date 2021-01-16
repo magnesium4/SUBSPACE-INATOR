@@ -8,8 +8,10 @@ from PIL import Image, ImageTk
 def click():
     root.destroy()
 
-# This method generates the matrix for the user to input to find the subspaces
 def generate():
+    """
+    Generates the matrix for the user to input to find the subspaces
+    """
 
     # user input try except statement (can only enter integer value between 1 and 20)
     user_var = False
@@ -33,23 +35,27 @@ def generate():
             for x in range(user_in):
                 txt_ent = Entry(array_window, width=10, font="Times 15 bold", justify='center')
                 txtboxes[x][y] = txt_ent
-                print(type(txtboxes[x][y]))
                 txtboxes[x][y].grid(column=x, row=y)
 
-        compute_btn = Button(array_window, text="Compute", font="Times 15 bold", fg="white", bg="black", width=8,
-                             command=lambda: compute(txtboxes, array_window))
+        compute_btn = Button(array_window, text="Compute", font="Times 15 bold", fg="black", bg="white", width=8,
+                             command=lambda: compute(txtboxes))
         leng = user_in + 1
-        wid = (user_in + 1)//2
-        compute_btn.grid(column=wid, row=leng)
+        compute_btn.grid(column=0, row=leng)
 
-# This method will compute the subspaces and show the jordan
-def compute(txtboxes, array_window):
+def compute(txtboxes):
+    """
+    Will compute the subspaces and show the jordan form
+    """
     allowed = True
     matrix = [[0 for x in range(len(txtboxes))] for x in range(len(txtboxes))]
     for y in range(len(txtboxes)):
         for x in range(len(txtboxes)):
-            matrix[x][y] = int(txtboxes[x][y].get())
+            try:
+                matrix[x][y] = int(txtboxes[x][y].get())
+            except:
+                allowed = False
 
+    # This will display the number of invariant subspaces and the jordan form
     if allowed:
         answer = 'The number of invariant subspaces is: ' + str(count_inv_subspace(matrix))
         jordan_form = find_jordan_form(matrix)
@@ -82,8 +88,8 @@ if __name__ == "__main__":
     canvas.create_text(500, 150, text="SUBSPACE-INATOR", font="Times 70 bold", fill="white")
 
     # making the buttons and the textbox for input, to generate the matrix, and an exit button to close the applet
-    exit_button = Button(canvas, text="Exit", command=click, font="Times 30 bold", bg="black", fg="white")
-    generate_button = Button(canvas, text="Generate", command=generate, font="Times 30 bold", bg="black", fg="white")
+    exit_button = Button(canvas, text="Exit", command=click, font="Times 30 bold", bg="white", fg="black")
+    generate_button = Button(canvas, text="Generate", command=generate, font="Times 30 bold", bg="white", fg="black")
     entry = Entry(canvas, font="Times 30 bold", justify='center')
 
     # making windows to put the buttons in the canvas
